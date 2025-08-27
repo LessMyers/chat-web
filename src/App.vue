@@ -4,7 +4,7 @@
       <Head></Head>
     </header>
     <main class="content">
-      <p v-for="n in 50" :key="n">第 {{ n }} 行内容</p>
+      <Message></Message>
     </main>
     <footer class="footer">
       <Send></Send>

@@ -31,9 +31,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, onMounted } from 'vue';
 import moment from "moment";
-
 
 const u_id = ref(1);
 const messages = ref([
@@ -85,12 +84,13 @@ function get_name(id) {
     } else {
         return "李四";
     }
-
 }
 
 const date = ref("");
 
 let show_time = null;
+let is_top = false;
+
 onMounted(async () => {
     const container = document.getElementById('content');
     container.addEventListener('scroll', () => {
@@ -104,6 +104,18 @@ onMounted(async () => {
                     show_time = setTimeout(() => {
                         date.value = "";
                     }, 3000);
+
+                    if (item.dataset.utc == messages.value[0].utc) {
+                        //console.log("滚动到最顶部了");
+                        if (is_top) {
+                            return;
+                        }
+                        const obj = {
+                            sender: 1, receiver: 2, type: 1, url: "", text: "这是最早一条", utc: 1756304120, group: 0
+                        };
+                        messages.value = [obj, ...messages.value];
+                        is_top = true;
+                    }
                 }
                 break;
             }

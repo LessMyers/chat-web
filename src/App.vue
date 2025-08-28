@@ -14,7 +14,7 @@
 
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref, nextTick,onMounted } from 'vue'
 //import { showSuccessToast, showFailToast } from "vant";
 
 import Head from "@/components/Head.vue";
@@ -46,9 +46,14 @@ async function scrollToBottom() {
 }
 
 setTimeout(() => {
-    scrollToBottom();
+    //scrollToBottom();
     //console.log("滚动到底部");
 }, 5000);
+
+onMounted(() => {
+    scrollToBottom();
+    //console.log("滚动到底部");
+});
 
 </script>
 

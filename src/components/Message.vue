@@ -53,6 +53,9 @@ const messages = ref([
     { sender: 2, receiver: 1, type: 4, url: "/vite.svg", text: "", utc: 1756307920, group: 0 },
     { sender: 1, receiver: 2, type: 2, url: "/di-8.mp3", text: "", utc: 1756308920, group: 0 },
     { sender: 2, receiver: 1, type: 2, url: "/di-8.mp3", text: "", utc: 1756309920, group: 0 },
+    { sender: 1, receiver: 2, type: 3, url: "https://www.w3schools.com/html/mov_bbb.mp4", text: "", utc: 1756302920, group: 0 },
+    { sender: 2, receiver: 1, type: 3, url: "https://www.w3schools.com/html/mov_bbb.mp4", text: "", utc: 1756303920, group: 0 },
+
 ]);
 
 const Type = {
@@ -66,9 +69,9 @@ function text_time(msg) {
     if (msg.type == Type.Text) {
         return `${msg.text}<span class="time"> ${moment(msg.utc * 1000).format("HH:mm")}<span>`;
     } else if (msg.type == Type.Audio) {
-        return ` <audio controls src="${msg.url}"></audio><span class="time"> ${moment(msg.utc * 1000).format("HH:mm")}<span>`;
+        return `<audio src="${msg.url}" controls class="audio"></audio><span class="time"> ${moment(msg.utc * 1000).format("HH:mm")}<span>`;
     } else if (msg.type == Type.Video) {
-        return `<span class="time">${moment(msg.utc * 1000).format("HH:mm")}<span>`;
+        return `<video src="${msg.url}" controls class="audio"></video><span class="time">${moment(msg.utc * 1000).format("HH:mm")}<span>`;
     } else if (msg.type == Type.Image) {
         return `<img src="${msg.url}" class="image"></img><span class="time"> ${moment(msg.utc * 1000).format("HH:mm")}<span>`;
     }
@@ -159,5 +162,8 @@ onMounted(async () => {
 .side {
     text-align: center;
     padding-top: 5px;
+}
+.audio {
+    max-width: 75vw;
 }
 </style>

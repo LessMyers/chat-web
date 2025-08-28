@@ -3,7 +3,7 @@
     <header class="header">
       <Head></Head>
     </header>
-    <main class="content" id="content">
+    <main ref="content" class="content" id="content">
       <Message></Message>
     </main>
     <footer class="footer">
@@ -14,12 +14,42 @@
 
 
 <script setup>
-//import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 //import { showSuccessToast, showFailToast } from "vant";
 
 import Head from "@/components/Head.vue";
 import Message from "@/components/Message.vue";
 import Send from "@/components/Send.vue";
+
+function playSendSound() {
+  const soundSendUrl = "https://assets.cometchat.io/uikits/static/audio/outgoingmessage.wav";
+  const audio = new Audio(soundSendUrl);
+  audio.play().catch(() => { });
+}
+
+function playReceiveSound() {
+  const soundReceiveUrl = "https://assets.cometchat.io/uikits/static/audio/incomingmessage.wav";
+  const audio = new Audio(soundReceiveUrl);
+  audio.play().catch(() => { 
+    //console.log("播放接收消息声音失败");
+  });
+}
+
+const content = ref(null);
+async function scrollToBottom() {
+    await nextTick();
+    if (content.value) {
+        content.value.scrollTop = content.value.scrollHeight;
+        //playReceiveSound();
+        playSendSound();
+    }
+}
+
+setTimeout(() => {
+    scrollToBottom();
+    //console.log("滚动到底部");
+}, 5000);
+
 </script>
 
 <style scoped>

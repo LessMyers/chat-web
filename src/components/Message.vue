@@ -31,8 +31,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import moment from "moment";
+
 
 const u_id = ref(1);
 const messages = ref([
@@ -156,13 +157,16 @@ onMounted(async () => {
     width: 40px;
     transform: translateY(16px) translateX(4px);
 }
+
 .image {
     max-width: 90vw;
 }
+
 .side {
     text-align: center;
     padding-top: 5px;
 }
+
 .audio {
     max-width: 75vw;
 }

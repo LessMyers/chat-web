@@ -94,10 +94,14 @@ function get_name(id) {
 .text {
     white-space: pre-line;
     word-break: break-all;
+    text-align: left;
     background-color: white;
     padding: 8px;
     border-radius: 4px;
     display: inline-block;
+/*
+    position: relative;
+*/
 }
 
 .side {

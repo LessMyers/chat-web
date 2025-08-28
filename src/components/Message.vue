@@ -33,10 +33,12 @@
 
 <script setup>
 import { ref } from 'vue';
+import moment from "moment";
+
 const u_id = ref(1);
 const messages = ref([
     {
-        sender: 1, receiver: 2, type: 1, url: "", text: "你好这两种语法等效吗qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗?", utc: 1756306120, group: 0
+        sender: 1, receiver: 2, type: 1, url: "", text: "你好这两种语法等效吗qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗??", utc: 1756306120, group: 0
     },
     { sender: 2, receiver: 1, type: 1, url: "", text: "你好", utc: 1756306220, group: 0 },
     { sender: 2, receiver: 1, type: 1, url: "", text: "你好", utc: 1756306220, group: 0 },
@@ -55,7 +57,7 @@ const Type = {
 };
 
 function text_time(text, utc) {
-    return `${text}<span class="time"> 21:18<span>`;
+    return `${text}<span class="time"> ${moment(utc * 1000).format("HH:mm")}<span>`;
 }
 
 function get_name(id) {

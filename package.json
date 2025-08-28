@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "emoji-picker-element": "^1.26.3",
+    "moment": "^2.30.1",
     "vant": "^4.9.21",
     "vue": "^3.4.21"
   },

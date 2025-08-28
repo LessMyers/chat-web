@@ -4,30 +4,26 @@
             {{ date }}
         </div>
         <template v-for="msg in messages">
-            <van-row v-if="msg.type == Type.Text" class="item" :data-utc="msg.utc">
+            <van-row class="item" :data-utc="msg.utc">
                 <van-col span="2" class="side">
                     <van-icon v-if="u_id == msg.receiver" name="like" size="25" color="#1989fa" />
                 </van-col>
+
                 <van-col span="20" v-if="u_id == msg.sender" class="is-self">
-                    <div class="text" style="background-color: #90ee90;" v-html="text_time(msg.text, msg.utc)">
+                    <div class="text" style="background-color: #90ee90;" v-html="text_time(msg)">
                     </div>
                 </van-col>
                 <van-col span="20" v-else>
                     <div class="name">
                         {{ get_name(msg.sender) }}</div>
                     <br />
-                    <div class="text" v-html="text_time(msg.text, msg.utc)">
+                    <div class="text" v-html="text_time(msg)">
                     </div>
                 </van-col>
+
                 <van-col span="2" class="side">
                     <van-icon v-if="u_id == msg.sender" name="star" size="25" color="#ee0a24" />
                 </van-col>
-            </van-row>
-            <van-row v-else-if="msg.type == Type.Audio">
-            </van-row>
-            <van-row v-else-if="msg.type == Type.Video">
-            </van-row>
-            <van-row v-else-if="msg.type == Type.Image">
             </van-row>
             <br />
         </template>
@@ -53,7 +49,8 @@ const messages = ref([
     { sender: 1, receiver: 2, type: 1, url: "", text: "你好", utc: 1756306920, group: 0 },
     { sender: 1, receiver: 2, type: 1, url: "", text: "你好111111111111111", utc: 1756306920, group: 0 },
     { sender: 1, receiver: 2, type: 1, url: "", text: "你好222222222222222", utc: 1756306920, group: 0 },
-
+    { sender: 1, receiver: 2, type: 4, url: "/vite.svg", text: "", utc: 1756307920, group: 0 },
+    { sender: 2, receiver: 1, type: 4, url: "/vite.svg", text: "", utc: 1756307920, group: 0 },
 ]);
 
 const Type = {
@@ -63,9 +60,18 @@ const Type = {
     Image: 4,
 };
 
-function text_time(text, utc) {
-    return `${text}<span class="time"> ${moment(utc * 1000).format("HH:mm")}<span>`;
+function text_time(msg) {
+    if (msg.type == Type.Text) {
+        return `${msg.text}<span class="time"> ${moment(msg.utc * 1000).format("HH:mm")}<span>`;
+    } else if (msg.type == Type.Audio) {
+        return `<span class="time"> ${moment(msg.utc * 1000).format("HH:mm")}<span>`;
+    } else if (msg.type == Type.Video) {
+        return `<span class="time"> ${moment(msg.utc * 1000).format("HH:mm")}<span>`;
+    } else if (msg.type == Type.Image) {
+        return `<img src="${msg.url}" class="image"></img><span class="time"> ${moment(msg.utc * 1000).format("HH:mm")}<span>`;
+    }
 }
+
 
 function get_name(id) {
     if (id == 1) {
@@ -103,14 +109,14 @@ onMounted(async () => {
 
 <style>
 .date {
-    border-radius: 5px; 
-    width: 50px; 
-    opacity: 0.5; 
-    position: absolute; 
-    text-align: center; 
-    color: white; 
-    background-color:#969799; 
-    left: 50%; 
+    border-radius: 5px;
+    width: 50px;
+    opacity: 0.5;
+    position: absolute;
+    text-align: center;
+    color: white;
+    background-color: #969799;
+    left: 50%;
     transform: translateX(-50%);
 }
 
@@ -145,7 +151,9 @@ onMounted(async () => {
     width: 40px;
     transform: translateY(16px) translateX(4px);
 }
-
+.image {
+    max-width: 90vw;
+}
 .side {
     text-align: center;
     padding-top: 5px;

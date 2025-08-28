@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <header class="header" @click="send">
+    <header class="header">
       <Head></Head>
     </header>
     <main ref="content" class="content" id="content">
@@ -42,8 +42,8 @@ function send() {
 }
 
 setTimeout(() => {
-  showFailToast("发送消息.........");
-  send();
+  //showFailToast("发送消息.........");
+  //send();
 }, 5000);
 
 const content = ref(null);
@@ -62,7 +62,7 @@ setTimeout(() => {
 }, 5000);
 
 onMounted(() => {
-    scrollToBottom();
+    //scrollToBottom();
     //console.log("滚动到底部");
 });
 

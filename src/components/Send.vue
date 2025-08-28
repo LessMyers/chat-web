@@ -26,7 +26,7 @@
 <script setup>
 import { ref } from 'vue'
 import { showSuccessToast, showFailToast } from "vant";
-
+//import EmojiPicker from 'emoji-picker-element';
 
 function playSendSound() {
   const soundSendUrl = "https://assets.cometchat.io/uikits/static/audio/outgoingmessage.wav";

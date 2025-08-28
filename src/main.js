@@ -1,8 +1,6 @@
-import { createApp } from 'vue'
-//import './style.css'
+import { createApp } from 'vue';
 import App from './App.vue';
 import 'emoji-picker-element';
-
 import "vant/lib/index.css";
 
 import {

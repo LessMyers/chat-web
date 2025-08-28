@@ -10,7 +10,7 @@
                 </van-col>
 
                 <van-col span="20" v-if="u_id == msg.sender" class="is-self">
-                    <div class="text" style="background-color: #90ee90;" v-html="text_time(msg)">
+                    <div class="text" :class="msg.type == Type.Text ? 'back-text' : 'back-not-text'" v-html="text_time(msg)">
                     </div>
                 </van-col>
                 <van-col span="20" v-else>
@@ -91,7 +91,7 @@ const date = ref("");
 
 
 onMounted(async () => {
-    /*
+    
     let show_time = null;
     let is_top = false;
     const container = document.getElementById('content');
@@ -123,7 +123,7 @@ onMounted(async () => {
             }
         }
     });
-    */
+    
 });
 
 </script>
@@ -189,5 +189,13 @@ onMounted(async () => {
 .audio {
     max-width: 75vw;
     margin: auto;
+}
+
+.back-text {
+    background-color: #90ee90;
+}
+
+.back-not-text {
+    background-color: #d9fcd9;
 }
 </style>

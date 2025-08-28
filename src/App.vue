@@ -3,7 +3,7 @@
     <header class="header">
       <Head></Head>
     </header>
-    <main class="content">
+    <main class="content" id="content">
       <Message></Message>
     </main>
     <footer class="footer">

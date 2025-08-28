@@ -1,7 +1,10 @@
 <template>
     <div style="background-color:#f7f8fa; padding-top: 6px; padding-bottom: 6px;">
+        <div v-if="date" class="date">
+            {{ date }}
+        </div>
         <template v-for="msg in messages">
-            <van-row v-if="msg.type == Type.Text">
+            <van-row v-if="msg.type == Type.Text" class="item" :data-utc="msg.utc">
                 <van-col span="2" class="side">
                     <van-icon v-if="u_id == msg.receiver" name="like" size="25" color="#1989fa" />
                 </van-col>
@@ -32,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import moment from "moment";
 
 const u_id = ref(1);
@@ -46,7 +49,11 @@ const messages = ref([
     { sender: 2, receiver: 1, type: 1, url: "", text: "你好", utc: 1756306420, group: 0 },
     { sender: 1, receiver: 2, type: 1, url: "", text: "你好", utc: 1756306920, group: 0 },
     { sender: 1, receiver: 2, type: 1, url: "", text: "你好", utc: 1756306920, group: 0 },
-    { sender: 1, receiver: 2, type: 1, url: "", text: "你好", utc: 1756306920, group: 0 }, { sender: 1, receiver: 2, type: 1, url: "", text: "你好", utc: 1756306920, group: 0 },
+    { sender: 1, receiver: 2, type: 1, url: "", text: "你好", utc: 1756306920, group: 0 },
+    { sender: 1, receiver: 2, type: 1, url: "", text: "你好", utc: 1756306920, group: 0 },
+    { sender: 1, receiver: 2, type: 1, url: "", text: "你好111111111111111", utc: 1756306920, group: 0 },
+    { sender: 1, receiver: 2, type: 1, url: "", text: "你好222222222222222", utc: 1756306920, group: 0 },
+
 ]);
 
 const Type = {
@@ -68,9 +75,45 @@ function get_name(id) {
     }
 
 }
+
+const date = ref("");
+
+let show_time = null;
+onMounted(async () => {
+    const container = document.getElementById('content');
+    container.addEventListener('scroll', () => {
+        const scrollTop = container.scrollTop;
+        const items = container.querySelectorAll('.item');
+        for (let item of items) {
+            if (item.offsetTop >= scrollTop) {
+                if (item.dataset.utc) {
+                    date.value = moment(item.dataset.utc * 1000).format("MM-DD");
+                    clearTimeout(show_time);
+                    show_time = setTimeout(() => {
+                        date.value = "";
+                    }, 3000);
+                }
+                break;
+            }
+        }
+    });
+});
+
 </script>
 
 <style>
+.date {
+    border-radius: 5px; 
+    width: 50px; 
+    opacity: 0.5; 
+    position: absolute; 
+    text-align: center; 
+    color: white; 
+    background-color:#969799; 
+    left: 50%; 
+    transform: translateX(-50%);
+}
+
 .is-self {
     text-align: right;
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <header class="header">
+    <header class="header" @click="send">
       <Head></Head>
     </header>
     <main ref="content" class="content" id="content">
@@ -15,25 +15,36 @@
 
 <script setup>
 import { ref, nextTick,onMounted } from 'vue'
-//import { showSuccessToast, showFailToast } from "vant";
+import { showSuccessToast, showFailToast } from "vant";
 
 import Head from "@/components/Head.vue";
 import Message from "@/components/Message.vue";
 import Send from "@/components/Send.vue";
 
 function playSendSound() {
-  const soundSendUrl = "https://assets.cometchat.io/uikits/static/audio/outgoingmessage.wav";
+  const soundSendUrl = "/send.wav";
   const audio = new Audio(soundSendUrl);
   audio.play().catch(() => { });
 }
 
 function playReceiveSound() {
-  const soundReceiveUrl = "https://assets.cometchat.io/uikits/static/audio/incomingmessage.wav";
+  const soundReceiveUrl = "/receive.wav";
   const audio = new Audio(soundReceiveUrl);
   audio.play().catch(() => { 
     //console.log("播放接收消息声音失败");
   });
 }
+
+function send() {
+  //playSendSound();
+  showSuccessToast("发送消息");
+  playReceiveSound();
+}
+
+setTimeout(() => {
+  showFailToast("发送消息.........");
+  send();
+}, 5000);
 
 const content = ref(null);
 async function scrollToBottom() {
@@ -41,7 +52,7 @@ async function scrollToBottom() {
     if (content.value) {
         content.value.scrollTop = content.value.scrollHeight;
         //playReceiveSound();
-        playSendSound();
+        //playSendSound();
     }
 }
 

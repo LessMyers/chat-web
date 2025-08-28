@@ -38,9 +38,9 @@ import moment from "moment";
 const u_id = ref(1);
 const messages = ref([
     {
-        sender: 1, receiver: 2, type: 1, url: "", text: "你好这两种语法等效吗qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗??", utc: 1756306120, group: 0
+        sender: 1, receiver: 2, type: 1, url: "", text: "你好这两种语法等效吗qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗??", utc: 1756306120, group: 0
     },
-    { sender: 2, receiver: 1, type: 1, url: "", text: "你好", utc: 1756306220, group: 0 },
+    { sender: 2, receiver: 1, type: 1, url: "", text: "你好这两种语法等效吗qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗?这两种语法等效吗??", utc: 1756306220, group: 0 },
     { sender: 2, receiver: 1, type: 1, url: "", text: "你好", utc: 1756306220, group: 0 },
     { sender: 1, receiver: 2, type: 1, url: "", text: "你好", utc: 1756306320, group: 0 },
     { sender: 2, receiver: 1, type: 1, url: "", text: "你好", utc: 1756306420, group: 0 },
@@ -75,14 +75,6 @@ function get_name(id) {
     text-align: right;
 }
 
-.time {
-    font-size: 12px;
-    color: #969799;
-    display: inline-block;
-    margin-left: 6px;
-    transform: translateY(6px);
-}
-
 .name {
     color: #323233;
     font-size: 10px;
@@ -99,9 +91,16 @@ function get_name(id) {
     padding: 8px;
     border-radius: 4px;
     display: inline-block;
-/*
-    position: relative;
-*/
+}
+
+.time {
+    font-size: 12px;
+    color: #969799;
+    display: inline-block;
+    text-align: center;
+    float: right;
+    width: 40px;
+    transform: translateY(16px) translateX(4px);
 }
 
 .side {

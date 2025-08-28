@@ -26,7 +26,22 @@
 <script setup>
 import { ref } from 'vue'
 import { showSuccessToast, showFailToast } from "vant";
-//import EmojiPicker from 'emoji-picker-element';
+
+const ws = new WebSocket("ws://localhost:8888");
+
+ws.onmessage = async (event) => {
+    console.log("收到消息: " + event.data);
+    //const msg = JSON.parse(event.data.toString()); // Node.js 端
+    const buffer = await event.data.arrayBuffer();
+    // 如果是 JSON
+    const text = new TextDecoder("utf-8").decode(buffer);
+    const obj = JSON.parse(text);
+    console.log("解码 JSON:", obj);
+};
+
+//const msg = { sender: 2, receiver: 1, type: 1, url: "", text: "你好", utc: get_utc(), group: 0 };
+//  ws.send(JSON.stringify(msg));
+//  console.log("发送消息: " + JSON.stringify(msg));
 
 function playSendSound() {
   const soundSendUrl = "https://assets.cometchat.io/uikits/static/audio/outgoingmessage.wav";
@@ -43,8 +58,14 @@ function playReceiveSound() {
 const text = ref('');
 const showPicker = ref(false);
 
+function get_utc() {
+  return Math.floor(new Date().getTime() / 1000);
+}
+
 function send() {
-  showSuccessToast(text.value);
+  const msg = { sender: 2, receiver: 1, type: 1, url: "", text: text.value, utc: get_utc(), group: 0 };
+  ws.send(JSON.stringify(msg));
+  console.log("发送消息: " + JSON.stringify(msg));
   text.value = "";
   showPicker.value = false;
   playSendSound();

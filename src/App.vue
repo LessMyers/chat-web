@@ -3,7 +3,8 @@
     <header class="header">
       <Head></Head>
     </header>
-     <input type="file" @change="handleFile" />
+    <img v-if="src" :src="src" style="height: 20vh; width: auto;"></img>
+    <input type="file" @change="handleFile" />
     <button @click="upload">上传</button>
     <main ref="content" class="content" id="content">
       <Message></Message>
@@ -23,18 +24,22 @@ import Head from "@/components/Head.vue";
 import Message from "@/components/Message.vue";
 import Send from "@/components/Send.vue";
 
-/*
+import * as tus from 'tus-js-client'   // ⭐ 用这种方式
+
 let selectedFile = null
 
-function handleFile(event) {
-  selectedFile = event.target.files[0]
+function handleFile(e) {
+  selectedFile = e.target.files[0]
 }
+const src = ref("");
+
+const server_url = "https://qftms.metabasenet.site/";
 
 function upload() {
   if (!selectedFile) return
-
   const upload = new tus.Upload(selectedFile, {
-    endpoint: 'http://localhost:8888/file/uploads/',
+    endpoint: server_url,
+    //endpoint: 'http://127.0.0.1/',
     retryDelays: [0, 1000, 3000, 5000],
     metadata: {
       filename: selectedFile.name,
@@ -44,16 +49,17 @@ function upload() {
       console.log(`上传进度: ${(bytesUploaded / bytesTotal * 100).toFixed(2)}%`)
     },
     onSuccess: () => {
-      console.log('上传成功! 文件 URL:', upload.url)
+      //console.log('上传成功! 文件 URL:', `${upload.url}.${selectedFile.name.split('.').pop()}`)
+      const url_tmep = upload.url.replace(`${server_url}files/`,`${server_url}chat/`);
+      src.value = `${url_tmep}.${selectedFile.name.split('.').pop()}`
+      console.log(src.value);
     },
-    onError: (error) => {
-      console.error('上传失败:', error)
+    onError: (err) => {
+      console.error('上传失败:', err)
     }
   })
-
   upload.start()
 }
-*/
 
 function playSendSound() {
   const soundSendUrl = "/send.wav";
